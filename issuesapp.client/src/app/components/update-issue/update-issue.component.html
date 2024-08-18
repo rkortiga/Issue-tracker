@@ -1,1 +1,24 @@
-<p>update-issue works!</p>
+<div class="container my-5">
+  <h1  class="mb-3">Update Issue</h1>
+  <div class="row">
+    <div class="col-6">
+      <form #form="ngForm" (ngSubmit)="updateIssue()">
+        <div class="mb-3 form-check">
+          <label for="id" class="form-label">Id</label>
+          <input type="text" class="form-control" id="id" name="id" [(ngModel)]="issue.id">
+        </div>
+        <div class="mb-3 form-check">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" name="title" [(ngModel)]="issue.title">
+        </div>
+        <div class="mb-3 form-check">
+          <label for="description" class="form-label">Description</label>
+          <input type="text" class="form-control" id="description" name="description" [(ngModel)]="issue.description">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-secondary" (click)="delete()">Delete</button>
+      </form>
+    </div>
+  </div>
+
+</div>

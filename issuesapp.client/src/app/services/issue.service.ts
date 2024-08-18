@@ -28,7 +28,7 @@ export class IssueService {
     return this.http.post<Issue>(`${environment.apiBaseUrl}/Issues/CreateIssue`, issue);
   }
 
-  updateIssue(id: number, issue: Updateissuedto): Observable<Issue> {
+  updateIssue(issue: Updateissuedto, id: number): Observable<Issue> {
     return this.http.put<Issue>(`${environment.apiBaseUrl}/Issues/UpdateIssue/${id}`, issue);
   }
 
