@@ -11,7 +11,7 @@ public interface IIssueService
 	
 	Task<Issue> CreateIssueAsync(CreateIssueDto issue);
 	
-	Task<Issue> UpdateIssueAsync(UpdateIssueDto issue);
+	Task<Issue> UpdateIssueAsync(UpdateIssueDto issue, int id);
 	
 	Task<Boolean> DeleteIssueAsync(int id);
 }
