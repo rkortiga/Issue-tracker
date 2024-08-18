@@ -17,6 +17,7 @@ import {DialogModule} from "primeng/dialog";
 import { HomeComponent } from './components/home/home.component';
 import { AddIssueComponent } from './components/add-issue/add-issue.component';
 import { UpdateIssueComponent } from './components/update-issue/update-issue.component';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { UpdateIssueComponent } from './components/update-issue/update-issue.com
     MenuBarComponent,
     HomeComponent,
     AddIssueComponent,
-    UpdateIssueComponent
+    UpdateIssueComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

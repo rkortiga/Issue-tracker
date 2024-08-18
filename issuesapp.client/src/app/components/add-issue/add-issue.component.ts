@@ -16,7 +16,10 @@ export class AddIssueComponent implements OnInit {
     description: ''
   };
 
-  constructor(private issueService: IssueService, private formBuilder: FormBuilder, private messageService: MessageService, private router: Router) {
+  constructor(private issueService: IssueService,
+              private formBuilder: FormBuilder,
+              private messageService: MessageService,
+              private router: Router) {
   }
 
   ngOnInit() {

@@ -17,22 +17,22 @@ export class IssueService {
   constructor(private http: HttpClient) { }
 
   getIssues(): Observable<Issue[]> {
-    return this.http.get<Issue[]>(`${environment.apiBaseUrl}/Issues`);
+    return this.http.get<Issue[]>(`${environment.apiBaseUrl}/Issue/Issues`);
   }
 
   getIssueById(id: number): Observable<Issue> {
-    return this.http.get<Issue>(`${environment.apiBaseUrl}/Issues/${id}`);
+    return this.http.get<Issue>(`${environment.apiBaseUrl}/Issue/Issue/${id}`);
   }
 
   createIssue(issue: CreateIssueDto): Observable<Issue> {
-    return this.http.post<Issue>(`${environment.apiBaseUrl}/Issues/CreateIssue`, issue);
+    return this.http.post<Issue>(`${environment.apiBaseUrl}/Issue/CreateIssue`, issue);
   }
 
   updateIssue(issue: Updateissuedto, id: number): Observable<Issue> {
-    return this.http.put<Issue>(`${environment.apiBaseUrl}/Issues/UpdateIssue/${id}`, issue);
+    return this.http.put<Issue>(`${environment.apiBaseUrl}/Issue/UpdateIssue/${id}`, issue);
   }
 
   deleteIssue(id: number): Observable<Issue> {
-    return this.http.delete<Issue>(`${environment.apiBaseUrl}/Issues/DeleteIssue/${id}`);
+    return this.http.delete<Issue>(`${environment.apiBaseUrl}/Issue/DeleteIssue/${id}`);
   }
 }
