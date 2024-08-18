@@ -8,7 +8,7 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width:20%">ID</th>
+        <th style="width:20%; text-align: center;">ID</th>
         <th style="width:20%">Title</th>
         <th style="width:50%">Description</th>
         <th></th>
@@ -16,10 +16,11 @@
     </ng-template>
     <ng-template pTemplate="body" let-issue>
       <tr>
-        <td>{{issue.id}}</td>
+        <td style="text-align: center;">{{issue.id}}</td>
         <td>{{issue.title}}</td>
         <td>{{issue.description}}</td>
         <td><a [routerLink]="['/issues', 'update', issue.id]">View</a></td>
+      </tr>
     </ng-template>
   </p-table>
 </div>
