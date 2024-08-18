@@ -1,0 +1,6 @@
+@IssuesApp.Server_HostAddress = http://localhost:5090
+
+GET {{IssuesApp.Server_HostAddress}}/issuesapp/
+Accept: application/json
+
+###
