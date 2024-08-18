@@ -10,7 +10,7 @@
       <tr>
         <th style="width:20%">ID</th>
         <th style="width:20%">Title</th>
-        <th style="width:40%">Description</th>
+        <th style="width:50%">Description</th>
         <th></th>
       </tr>
     </ng-template>
@@ -19,7 +19,7 @@
         <td>{{issue.id}}</td>
         <td>{{issue.title}}</td>
         <td>{{issue.description}}</td>
-        <td><a [routerLink]="['/issue', 'update', issue.id]">View</a></td>
+        <td><a [routerLink]="['/issues', 'update', issue.id]">View</a></td>
     </ng-template>
   </p-table>
 </div>

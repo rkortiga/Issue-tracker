@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule, provideClientHydration} from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AddIssueComponent } from './components/add-issue/add-issue.component';
 import { UpdateIssueComponent } from './components/update-issue/update-issue.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import {DialogService} from "primeng/dynamicdialog";
+import {MessageService} from "primeng/api";
 
 @NgModule({
   declarations: [
@@ -43,7 +45,11 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
     ReactiveFormsModule,
     DialogModule,
   ],
-  providers: [],
+  providers: [
+  MessageService,
+  DialogService,
+    provideClientHydration()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
