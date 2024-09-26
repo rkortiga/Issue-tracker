@@ -1,36 +1,69 @@
-import {Component, OnInit} from '@angular/core';
-import {CreateIssueDto} from "../../models/createissuedto";
-import {IssueService} from "../../services/issue.service";
-import {FormBuilder} from "@angular/forms";
-import {MessageService} from "primeng/api";
-import {Router} from "@angular/router";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CreateIssueDto } from "../../models/createissuedto";
+import { IssueService } from "../../services/issue.service";
+import { MessageService } from "primeng/api";
+import { Router } from "@angular/router";
+import { Subject, takeUntil } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-add-issue',
-  templateUrl: './add-issue.component.html',
-  styleUrl: './add-issue.component.css'
+    selector: 'app-add-issue',
+    templateUrl: './add-issue.component.html',
+    styleUrl: './add-issue.component.css'
 })
-export class AddIssueComponent implements OnInit {
-  issue: CreateIssueDto = {
-    title: '',
-    description: ''
-  };
+export class AddIssueComponent implements OnInit, OnDestroy {
+    issueForm!: FormGroup;
+    private ngUnsubscribe$: Subject<void> = new Subject<void>();
 
-  constructor(private issueService: IssueService,
-              private formBuilder: FormBuilder,
-              private messageService: MessageService,
-              private router: Router) {
-  }
+    constructor(private issueService: IssueService,
+                private messageService: MessageService,
+                private router: Router,
+                private formBuilder: FormBuilder) {}
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.initializeForm();
+    }
 
-  AddIssue() {
-    this.issueService.createIssue(this.issue).subscribe(() => {
-      this.messageService.add({severity: 'success', summary: 'Success', detail: 'Issue added successfully!'});
-      this.router.navigate(['/issues']);
-    }, () => {
-      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Failed to add issue!'});
-    });
-  }
+    ngOnDestroy() {
+        this.ngUnsubscribe$.next();
+        this.ngUnsubscribe$.complete();
+    }
+
+    initializeForm() {
+        this.issueForm = this.formBuilder.group({
+            title: ['', Validators.required],
+            description: ['', Validators.required]
+        });
+    }
+
+    addIssue() {
+        if (this.issueForm.invalid) {
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Please fill out all required fields'
+            });
+            return;
+        }
+
+        const issueData: CreateIssueDto = this.issueForm.value;
+
+        this.issueService.createIssue(issueData)
+        .pipe(takeUntil(this.ngUnsubscribe$))
+        .subscribe(() => {
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Issue added successfully'
+            });
+            this.router.navigate(['/issues']);
+        }, (error: any) => {
+            console.error('Error creating issue:', error);
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to add issue'
+            });
+        });
+    }
 }

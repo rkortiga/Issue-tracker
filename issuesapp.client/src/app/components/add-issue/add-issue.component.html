@@ -1,19 +1,26 @@
 <div class="container my-5">
-  <h1  class="mb-3">Add Issue</h1>
-  <div class="row">
-    <div class="col-6">
-      <form #form="ngForm">
-        <div class="mb-3 form-check">
-          <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title" name="title" [(ngModel)]="issue.title">
-        </div>
-        <div class="mb-3 form-check">
-          <label for="description" class="form-label">Description</label>
-          <input type="text" class="form-control" id="description" name="description" [(ngModel)]="issue.description">
-        </div>
-        <button type="submit" class="btn btn-primary" (click)="AddIssue()">Add</button>
-      </form>
-    </div>
-  </div>
-
+      <h1 class="mb-3">Add Issue</h1>
+      <div class="row">
+            <div class="col-6">
+                  <form (ngSubmit)="addIssue()" [formGroup]="issueForm">
+                        <div class="mb-3">
+                              <label class="form-label" for="title">Title</label>
+                              <input class="form-control" formControlName="title" id="title" type="text">
+                              <div *ngIf="issueForm.get('title')?.invalid && issueForm.get('title')?.touched"
+                                   class="text-danger">
+                                    Title is required
+                              </div>
+                        </div>
+                        <div class="mb-3">
+                              <label class="form-label" for="description">Description</label>
+                              <input class="form-control" formControlName="description" id="description" type="text">
+                              <div *ngIf="issueForm.get('description')?.invalid && issueForm.get('description')?.touched"
+                                   class="text-danger">
+                                    Description is required
+                              </div>
+                        </div>
+                        <button [disabled]="issueForm.invalid" class="btn btn-primary" type="submit">Add</button>
+                  </form>
+            </div>
+      </div>
 </div>
