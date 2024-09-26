@@ -65,13 +65,22 @@ export class UpdateIssueComponent implements OnInit, OnDestroy {
 
         const issueData: UpdateIssueDto = this.updateIssueForm.getRawValue();
         this.issueService.updateIssue(issueData, issueData.id).pipe(takeUntil(this.ngUnsubscribe$))
-        .subscribe(res => {
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Issue updated successfully!'
-            });
-            this.router.navigate(['/issues']);
+        .subscribe({
+            next: res => {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    detail: 'Issue updated successfully!'
+                });
+                this.router.navigate(['/issues']);
+            },
+            error: err => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Failed to update issue'
+                });
+            }
         });
     }
 
@@ -79,8 +88,17 @@ export class UpdateIssueComponent implements OnInit, OnDestroy {
         const issueId = this.updateIssueForm.get('id')?.value;
         if (issueId) {
             this.issueService.deleteIssue(issueId).pipe(takeUntil(this.ngUnsubscribe$))
-            .subscribe(() => {
-                this.router.navigate(['/issues']);
+            .subscribe({
+                next: () => {
+                    this.router.navigate(['/issues']);
+                },
+                error: err => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: 'Failed to delete issue'
+                    });
+                }
             });
         }
     }
