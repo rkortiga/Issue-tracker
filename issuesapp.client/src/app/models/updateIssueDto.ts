@@ -1,4 +1,4 @@
-export interface Updateissuedto {
+export interface UpdateIssueDto {
   id: number,
   title: string,
   description: string

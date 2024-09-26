@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CreateIssueDto } from "../../models/createissuedto";
+import { CreateIssueDto } from "../../models/createIssueDto";
 import { IssueService } from "../../services/issue.service";
 import { MessageService } from "primeng/api";
 import { Router } from "@angular/router";
@@ -58,12 +58,13 @@ export class AddIssueComponent implements OnInit, OnDestroy {
             });
             this.router.navigate(['/issues']);
         }, (error: any) => {
-            console.error('Error creating issue:', error);
-            this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Failed to add issue'
-            });
+            if (error) {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Failed to add issue'
+                });
+            }
         });
     }
 }

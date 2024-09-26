@@ -8,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
     templateUrl: './paginator.component.html',
     styleUrl: './paginator.component.css'
 })
+
 export class PaginatorComponent implements OnInit, OnDestroy {
     issues: Issue[] = [];
     private ngUnsubscribe$: Subject<void> = new Subject<void>();

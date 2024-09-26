@@ -3,11 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "../environments/environment";
 import { Observable } from "rxjs";
 import { Issue } from "../models/issue";
-import { CreateIssueDto } from "../models/createissuedto";
-import { Updateissuedto } from "../models/updateissuedto";
-
-class HttpParams {
-}
+import { CreateIssueDto } from "../models/createIssueDto";
+import { UpdateIssueDto } from "../models/updateIssueDto";
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +25,7 @@ export class IssueService {
         return this.http.post<Issue>(`${environment.apiBaseUrl}/Issue/CreateIssue`, issue);
     }
 
-    updateIssue(issue: Updateissuedto, id: number): Observable<Issue> {
+    updateIssue(issue: UpdateIssueDto, id: number): Observable<Issue> {
         return this.http.put<Issue>(`${environment.apiBaseUrl}/Issue/UpdateIssue/${id}`, issue);
     }
 

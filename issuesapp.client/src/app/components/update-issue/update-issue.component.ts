@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Updateissuedto } from "../../models/updateissuedto";
+import { UpdateIssueDto } from "../../models/updateIssueDto";
 import { IssueService } from "../../services/issue.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
@@ -44,7 +44,9 @@ export class UpdateIssueComponent implements OnInit, OnDestroy {
         .subscribe(params => {
             const id = params.get('id');
             if (id) {
-                this.issueService.getIssueById(parseInt(id)).subscribe(res => {
+                this.issueService.getIssueById(parseInt(id))
+                .pipe(takeUntil(this.ngUnsubscribe$))
+                .subscribe(res => {
                     this.updateIssueForm.patchValue(res);
                 });
             }
@@ -60,8 +62,8 @@ export class UpdateIssueComponent implements OnInit, OnDestroy {
             });
             return;
         }
-        
-        const issueData: Updateissuedto = this.updateIssueForm.getRawValue();
+
+        const issueData: UpdateIssueDto = this.updateIssueForm.getRawValue();
         this.issueService.updateIssue(issueData, issueData.id).pipe(takeUntil(this.ngUnsubscribe$))
         .subscribe(res => {
             this.messageService.add({
