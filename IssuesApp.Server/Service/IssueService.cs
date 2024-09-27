@@ -1,69 +1,59 @@
-using IssuesApp.Server.Context;
 using IssuesApp.Server.Models;
 using IssuesApp.Server.Models.Dto;
-using Microsoft.EntityFrameworkCore;
+using IssuesApp.Server.Repository;
 
-namespace IssuesApp.Server.Service;
-
-public class IssueService : IIssueService
+namespace IssuesApp.Server.Service
 {
-	private readonly MyDbContext _context;
+	public class IssueService : IIssueService
+	{
+		private readonly IIssueRepository _issueRepository;
 
-	public IssueService(MyDbContext context)
-	{
-		_context = context;
-	}
-	
-	public async Task<IEnumerable<Issue>> GetAllIssuesAsync()
-	{
-		return await _context.Issues.ToListAsync();
-	}
-
-	public async Task<Issue> GetIssueByIdAsync(int id)
-	{
-		return await _context.Issues.FindAsync(id);
-	}
-
-	public async Task<Issue> CreateIssueAsync(CreateIssueDto issue)
-	{
-		var newIssue = new Issue
+		public IssueService(IIssueRepository issueRepository)
 		{
-			Title = issue.Title,
-			Description = issue.Description,
-		};
-		
-		_context.Issues.Add(newIssue);
-		await _context.SaveChangesAsync();
-		return newIssue;
-	}
-
-	public async Task<Issue> UpdateIssueAsync(UpdateIssueDto issue, int id)
-	{
-		var issueToUpdate = await _context.Issues.FindAsync(id);
-		
-		if (issueToUpdate == null)
-		{
-			return null;
+			_issueRepository = issueRepository;
 		}
-		
-		issueToUpdate.Title = issue.Title;
-		issueToUpdate.Description = issue.Description;
-		
-		await _context.SaveChangesAsync();
-		return issueToUpdate;
-	}
 
-	public async Task<Boolean> DeleteIssueAsync(int id)
-	{
-		var issueToDelete = await _context.Issues.FindAsync(id);
-		
-		if (issueToDelete == null)
+		#region IIssueService Members
+		public async Task<IEnumerable<Issue>> GetAllIssuesAsync()
 		{
-			return false;
+			return await _issueRepository.GetAllIssuesAsync();
 		}
-		
-		_context.Issues.Remove(issueToDelete);
-		await _context.SaveChangesAsync();
-		return true;
+
+		public async Task<Issue> GetIssueByIdAsync(int id)
+		{
+			return await _issueRepository.GetIssueByIdAsync(id);
+		}
+
+		public async Task<Issue> CreateIssueAsync(CreateIssueDto issueDto)
+		{
+			var newIssue = new Issue
+			{
+				Title = issueDto.Title,
+				Description = issueDto.Description
+			};
+
+			return await _issueRepository.AddIssueAsync(newIssue);
+		}
+
+		public async Task<Issue> UpdateIssueAsync(UpdateIssueDto issueDto, int id)
+		{
+			var issueToUpdate = await _issueRepository.GetIssueByIdAsync(id);
+			if (issueToUpdate == null)
+			{
+				return null;
+			}
+
+			issueToUpdate.Title = issueDto.Title;
+			issueToUpdate.Description = issueDto.Description;
+
+			return await _issueRepository.UpdateIssueAsync(issueToUpdate);
+		}
+
+		public async Task<bool> DeleteIssueAsync(int id)
+		{
+			return await _issueRepository.DeleteIssueAsync(id);
+		}
+		#endregion
+
 	}
 }

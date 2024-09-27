@@ -10,26 +10,27 @@ import { UpdateIssueDto } from "../models/updateIssueDto";
     providedIn: 'root'
 })
 export class IssueService {
+    private readonly apiUrl = `${environment.apiBaseUrl}/issues`;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     getIssues(): Observable<Issue[]> {
-        return this.http.get<Issue[]>(`${environment.apiBaseUrl}/Issue/Issues`);
+        return this.http.get<Issue[]>(`${this.apiUrl}`);
     }
 
     getIssueById(id: number): Observable<Issue> {
-        return this.http.get<Issue>(`${environment.apiBaseUrl}/Issue/Issue/${id}`);
+        return this.http.get<Issue>(`${this.apiUrl}/${id}`);
     }
 
     createIssue(issue: CreateIssueDto): Observable<Issue> {
-        return this.http.post<Issue>(`${environment.apiBaseUrl}/Issue/CreateIssue`, issue);
+        return this.http.post<Issue>(`${this.apiUrl}`, issue);
     }
 
     updateIssue(issue: UpdateIssueDto, id: number): Observable<Issue> {
-        return this.http.put<Issue>(`${environment.apiBaseUrl}/Issue/UpdateIssue/${id}`, issue);
+        return this.http.put<Issue>(`${this.apiUrl}/${id}`, issue);
     }
 
-    deleteIssue(id: number): Observable<Issue> {
-        return this.http.delete<Issue>(`${environment.apiBaseUrl}/Issue/DeleteIssue/${id}`);
+    deleteIssue(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
 }

@@ -1,4 +1,5 @@
 using IssuesApp.Server.Context;
+using IssuesApp.Server.Repository;
 using IssuesApp.Server.Service;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,18 +9,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IIssueService, IssueService>();
+builder.Services.AddScoped<IIssueRepository, IssueRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+	                                           options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowOrigin",
-        policyBuilder => policyBuilder.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+builder.Services.AddCors(options => {
+	options.AddPolicy("AllowOrigin",
+	                  configurePolicy: policyBuilder => policyBuilder.AllowAnyOrigin()
+		                  .AllowAnyMethod()
+		                  .AllowAnyHeader());
 });
 
 var app = builder.Build();
@@ -30,8 +31,8 @@ app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 
 app.UseCors("AllowOrigin");
