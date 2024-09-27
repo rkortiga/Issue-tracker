@@ -111,7 +111,7 @@ describe('UpdateIssueComponent', () => {
 
     it('should delete the issue and navigate on successful deletion', () => {
         component.updateIssueForm.setValue({id: 1, title: 'Test', description: 'Test'});
-        mockIssueService.deleteIssue.and.returnValue(of({id: 1, title: 'Test', description: 'Test'}));
+        mockIssueService.deleteIssue.and.returnValue(of(void 0));
 
         component.delete();
 
