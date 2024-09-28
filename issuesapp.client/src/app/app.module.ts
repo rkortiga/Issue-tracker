@@ -17,7 +17,6 @@ import { DialogModule } from "primeng/dialog";
 import { HomeComponent } from './components/home/home.component';
 import { AddIssueComponent } from './components/add-issue/add-issue.component';
 import { UpdateIssueComponent } from './components/update-issue/update-issue.component';
-import { PaginatorComponent } from './components/paginator/paginator.component';
 import { DialogService } from "primeng/dynamicdialog";
 import { MessageService } from "primeng/api";
 
@@ -28,8 +27,7 @@ import { MessageService } from "primeng/api";
         MenuBarComponent,
         HomeComponent,
         AddIssueComponent,
-        UpdateIssueComponent,
-        PaginatorComponent
+        UpdateIssueComponent
     ],
     imports: [
         BrowserModule,

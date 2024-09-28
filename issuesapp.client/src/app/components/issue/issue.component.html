@@ -1,1 +1,26 @@
-<app-paginator></app-paginator>
+<div class="card">
+      <p-table
+              [paginator]="true"
+              [rowsPerPageOptions]="[5, 10, 20]"
+              [rows]="5"
+              [tableStyle]="{ 'min-width': '50rem' }"
+              [value]="issues"
+      >
+            <ng-template pTemplate="header">
+                  <tr>
+                        <th style="width:20%; text-align: center;">ID</th>
+                        <th style="width:20%">Title</th>
+                        <th style="width:50%">Description</th>
+                        <th></th>
+                  </tr>
+            </ng-template>
+            <ng-template let-issue pTemplate="body">
+                  <tr>
+                        <td style="text-align: center;">{{ issue.id }}</td>
+                        <td>{{ issue.title }}</td>
+                        <td>{{ issue.description }}</td>
+                        <td><a [routerLink]="['/issues', 'update', issue.id]">View</a></td>
+                  </tr>
+            </ng-template>
+      </p-table>
+</div>

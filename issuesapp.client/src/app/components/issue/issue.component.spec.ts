@@ -4,7 +4,6 @@ import { IssueComponent } from './issue.component';
 import { IssueService } from '../../services/issue.service';
 import { of } from 'rxjs';
 import { PaginatorModule } from 'primeng/paginator';
-import { PaginatorComponent } from '../paginator/paginator.component';
 import { TableModule } from 'primeng/table';
 import { Issue } from '../../models/issue';
 import { RouterModule } from '@angular/router';
@@ -27,7 +26,7 @@ describe('IssueComponent', () => {
 
         await TestBed.configureTestingModule({
             imports: [RouterModule.forRoot([]), HttpClientTestingModule, PaginatorModule, TableModule],
-            declarations: [IssueComponent, PaginatorComponent],
+            declarations: [IssueComponent],
             providers: [{provide: IssueService, useValue: issueServiceStub}]
         })
         .compileComponents();
@@ -60,10 +59,5 @@ describe('IssueComponent', () => {
         component.ngOnDestroy();
         expect(ngUnsubscribeSpy).toHaveBeenCalled();
         expect(ngUnsubscribeCompleteSpy).toHaveBeenCalled();
-    });
-
-    it('should render the paginator component', () => {
-        const compiled = fixture.nativeElement;
-        expect(compiled.querySelector('app-paginator')).toBeTruthy();
     });
 });
